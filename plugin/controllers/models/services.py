@@ -499,7 +499,7 @@ def getChannelEpg(ref, begintime=-1, endtime=-1):
 
 		picon = getPicon(ref)
 		epgcache = eEPGCache.getInstance()
-		events = epgcache.lookupEvent(['IBDTSENC', (ref, 0, begintime, endtime)])
+		events = epgcache.lookupEvent(['IBDTSEWNC', (ref, 0, begintime, endtime)])
 		if events is not None:
 			for event in events:
 				ev = {}
@@ -515,14 +515,15 @@ def getChannelEpg(ref, begintime=-1, endtime=-1):
 					ev['title'] = filterName(event[3])
 					ev['shortdesc'] = event[4]
 					ev['longdesc'] = event[5]
+					ev['genre'] = event[6]
 					ev['sref'] = ref
-					ev['sname'] = filterName(event[6])
-					ev['tleft'] = int (((event[1] + event[2]) - event[7]) / 60)
+					ev['sname'] = filterName(event[7])
+					ev['tleft'] = int (((event[1] + event[2]) - event[8]) / 60)
 					if ev['duration_sec'] == 0:
 						ev['progress'] = 0
 					else:
-						ev['progress'] = int(((event[7] - event[1]) * 100 / event[2]) *4)
-					ev['now_timestamp'] = event[7]
+						ev['progress'] = int(((event[8] - event[1]) * 100 / event[2]) *4)
+					ev['now_timestamp'] = event[8]
 					ret.append(ev)
 				else:
 					use_empty_ev = True
@@ -542,6 +543,7 @@ def getChannelEpg(ref, begintime=-1, endtime=-1):
 		ev['shortdesc'] = ""
 		ev['sname'] = ""
 		ev['longdesc'] = ""
+		ev['genre'] = ""
 		ev['tleft'] = 0
 		ev['progress'] = 0
 		ev['now_timestamp'] = 0
