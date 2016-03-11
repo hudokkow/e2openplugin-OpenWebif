@@ -558,7 +558,7 @@ def getBouquetEpg(ref, begintime=-1, endtime=None):
 	if not services:
 		return { "events": ret, "result": False }
 
-	search = ['IBDCTSERN']
+	search = ['IBDCTSEWRN']
 	for service in services.getContent('S'):
 		if endtime:
 			search.append((service, 0, begintime, endtime))
@@ -576,8 +576,9 @@ def getBouquetEpg(ref, begintime=-1, endtime=None):
 			ev['title'] = event[4]
 			ev['shortdesc'] = event[5]
 			ev['longdesc'] = event[6]
-			ev['sref'] = event[7]
-			ev['sname'] = filterName(event[8])
+			ev['genre'] = event[7]
+			ev['sref'] = event[8]
+			ev['sname'] = filterName(event[9])
 			ev['now_timestamp'] = event[3]
 			ret.append(ev)
 
